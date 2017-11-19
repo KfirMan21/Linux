@@ -1,19 +1,47 @@
 #!/bin/bash
 
-# Script to run git commit + push
-# Copy this script to /bin/  
-# sudo chmod ugo+x /bin/pgit
-# Usage: pgit "[Commit Massage]"
+info() {
+cat << EOF
+####################################################
+#                                                  #    
+# Pgit by Kfir Man                                 #
+# ------------------------------------------------ #
+# pgit is a script to simplify the git commands    #                                  
+# Copy this script to your /bin/ folder            #
+# sudo chmod ugo+x /bin/pgit                       #
+# Usage:                                           #
+# pgit -a "[Commit Massage]" # commit + push       #
+# pgit -p                    # pull                #
+#                                                  #
+####################################################
+EOF
+exit 0
+}
 
-MSG=$1
+
+OPTIONS=":hpa:"
+if ( ! getopts "$OPTIONS" OPT); then
+	echo "ERROR: Invalid option!"
+	exit 1
+fi
+
+while getopts "$OPTIONS" OPT; do
+	case $OPT in
+		h)	info;;
+		p)	git pull origin master;;
+		a)  MSG=$OPTARG && ALL=1;;
+		:)	echo "ERROR: Option -$OPTARG requires some value." && exit 1;;
+		\?)	echo "ERROR: Invalid option: -$OPTARG" && exit 1;;
+	esac
+done
 
 if [ -z "$MSG" ]; then
 	echo "Commit massage can not be empty!"
 	echo "Usage: pgit [Commit Massage]"
 	exit 1
+elif [[ "$ALL" == 1 ]]; then
+	git commit -a -m "$MSG"
+	git push origin master
 fi
-
-git commit -a -m "$MSG"
-git push origin master
 
 exit 0
