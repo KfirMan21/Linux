@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Script to run git commit + push
+# Copy this script to /bin  
+# chown u+x /bin/pgit
+# Usage: pgit [Commit Massage]
+
+MSG=$1
+
+if [ -z "$MSG" ]; then
+	echo "Commit massage can not be empty!"
+	echo "Usage: pgit [Commit Massage]"
+	exit 1
+fi
+
+git commit -a -m "$MSG"
+git push origin master
+
+exit 0
