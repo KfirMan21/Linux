@@ -1,1 +1,17 @@
-## My Linux Automation Scripts Repo
+# Linux Automation Scripts Repo
+
+####################################################
+#                                                  #
+# Pgit by Kfir Man                                 #
+# ------------------------------------------------ #
+# pgit is a script to simplify the git commands    #
+# Copy this script to your /bin/ folder            #
+# sudo chmod ugo+x /bin/pgit                       #
+# Usage:                                           #
+# pgit -a "[Commit Massage]" # commit + push       #
+# pgit -p                    # pull                #
+# pgit -h                    # help                #
+#                                                  #
+####################################################
+
+

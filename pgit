@@ -9,6 +9,7 @@ cat << EOF
 # pgit is a script to simplify the git commands    #
 # Copy this script to your /bin/ folder            #
 # sudo chmod ugo+x /bin/pgit                       #
+#                                                  #
 # Usage:                                           #
 # pgit -a "[Commit Massage]" # commit + push       #
 # pgit -p                    # pull                #
