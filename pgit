@@ -3,43 +3,43 @@
 info() {
 cat << EOF
 ####################################################
-#                                                  #    
+#                                                  #
 # Pgit by Kfir Man                                 #
 # ------------------------------------------------ #
-# pgit is a script to simplify the git commands    #                                  
+# pgit is a script to simplify the git commands    #
 # Copy this script to your /bin/ folder            #
 # sudo chmod ugo+x /bin/pgit                       #
 # Usage:                                           #
 # pgit -a "[Commit Massage]" # commit + push       #
 # pgit -p                    # pull                #
+# pgit -h                    # help                #
 #                                                  #
 ####################################################
 EOF
-exit 0
+if [[ $1 ]]; then
+	exit 0
+else
+	exit 1
+fi
 }
-
 
 OPTIONS=":hpa:"
 if ( ! getopts "$OPTIONS" OPT); then
-	echo "ERROR: Invalid option!"
-	exit 1
+	echo -e "\e[31mERROR:\e[0m Invalid option!"
+	info
 fi
 
 while getopts "$OPTIONS" OPT; do
 	case $OPT in
-		h) info && MSG=false;;
+		h) info true && MSG=false;;
 		p) git pull origin master && MSG=false;;
 		a) MSG=$OPTARG && ALL=1;;
-		:) echo "ERROR: Option -$OPTARG requires some value." && exit 1;;
-		\?) echo "ERROR: Invalid option: -$OPTARG" && exit 1;;
+		:) echo -e "\e[31mERROR:\e[0m Option -$OPTARG requires some value." && info;;
+		\?) echo -e "\e[31mERROR:\e[0m Invalid option: -$OPTARG" && info;;
 	esac
 done
 
-if [ -z "$MSG" ]; then
-	echo "Commit massage can not be empty!"
-	echo "Usage: pgit [Commit Massage]"
-	exit 1
-elif [[ "$ALL" == 1 ]]; then
+if [[ "$ALL" == 1 ]]; then
 	git commit -a -m "$MSG"
 	git push origin master
 fi
