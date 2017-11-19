@@ -27,11 +27,11 @@ fi
 
 while getopts "$OPTIONS" OPT; do
 	case $OPT in
-		h)	info;;
-		p)	git pull origin master;;
-		a)  MSG=$OPTARG && ALL=1;;
-		:)	echo "ERROR: Option -$OPTARG requires some value." && exit 1;;
-		\?)	echo "ERROR: Invalid option: -$OPTARG" && exit 1;;
+		h) info;;
+		p) git pull origin master;;
+		a) MSG=$OPTARG && ALL=1;;
+		:) echo "ERROR: Option -$OPTARG requires some value." && exit 1;;
+		\?) echo "ERROR: Invalid option: -$OPTARG" && exit 1;;
 	esac
 done
 
