@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Script to run git commit + push
-# Copy this script to /bin  
-# chown u+x /bin/pgit
-# Usage: pgit [Commit Massage]
+# Copy this script to /bin/  
+# sudo chmod ugo+x /bin/pgit
+# Usage: pgit "[Commit Massage]"
 
 MSG=$1
 
