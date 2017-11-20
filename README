@@ -14,7 +14,7 @@
 #                                                  #
 ####################################################
 
-Installation:
+# Pgit Installation:
 # Use the following commands:
   cd /bin
   sudo wget https://raw.githubusercontent.com/KfirMan21/Linux/master/pgit
