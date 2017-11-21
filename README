@@ -1,4 +1,33 @@
-# Linux Automation Scripts Repo
+#### Linux Automation Scripts Repo ####
+
+
+#############################################################
+#                                                           #
+# Xip by Kfir Man                                           #
+# --------------------------------------------------------- #
+# xip is a script to get external IP And external IP        #
+# information plus an indication of the internet connection #
+# Copy this script to your /bin/ folder                     #
+# sudo chmod ugo+x /bin/xip                                 #
+#                                                           #
+# Usage:                                                    #
+# xip -i           # Get IP informtion                      #
+# xip              # Get External IP                        #
+#                                                           #
+#############################################################
+
+# Xip Installation:
+# Use the following commands:
+  cd /bin
+  sudo wget https://raw.githubusercontent.com/KfirMan21/Linux/master/xip
+  sudo chmod ugo+x /bin/xip
+
+# Start using xip:
+  xip -i
+
+
+----------------------------------------------------------------------------
+
 
 ####################################################
 #                                                  #
