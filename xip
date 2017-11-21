@@ -1,0 +1,82 @@
+#!/bin/bash
+
+#############################################################
+#                                                           #
+# Xip by Kfir Man                                           #
+# --------------------------------------------------------- #
+# xip is a script to get external IP And external IP        #
+# information plus an indication of the internet connection #
+# Copy this script to your /bin/ folder                     #
+# sudo chmod ugo+x /bin/xip                                 #
+#                                                           #
+# Usage:                                                    #
+# xip -i           # Get IP informtion                      # 
+# xip              # Get External IP                        #
+#                                                           #
+#############################################################
+
+getmyexternalipbycurl() {
+	if type curl > /dev/null; then
+		IP1=`curl -s --connect-timeout 5 whatismyip.akamai.com`
+		if [[ $? == 0 ]]; then
+			echo $IP1
+		else
+			echo -e "First curl check failed! trying another source, Please wait ..."
+			IP2=`curl -s --connect-timeout 5 ifconfig.co`
+			if [[ $? == 0 ]]; then
+				echo $IP2
+			else
+				echo -e "\e[31mERROR:\e[0m Second curl check failed!"
+				echo -e "\e[31mERROR:\e[0m Unable to check external IP, Check your Internet connection!: exit code: $?"
+				exit $?			
+			fi
+		fi
+	else
+		echo -e "\e[31mERROR:\e[0m The program 'curl' is currently not installed, Unable to continue!"
+		exit 1
+	fi	
+}
+
+getmyexternalip() {
+	IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+	if [[ $? == 0 ]]; then
+		if [[ ! -z "$IP" ]]; then
+			echo $IP
+		else
+			echo -e "First dig check failed! trying another source, Please wait ..."
+			getmyexternalipbycurl
+		fi
+	fi
+}
+
+getmyexternalipinfo() {
+	EXIP=`getmyexternalip`
+	if type curl > /dev/null; then
+		IPINFO=`curl -s --connect-timeout 5 ipinfo.io/$EXIP`
+		if [[ $? == 0 ]]; then
+			SV=`echo $IPINFO | tr '{}' " "`
+			echo ${SV//[[:blank:]]/} | sed 's/,"/\n/g' | sed 's/"//g' | sed 's/:/ => /g'
+		else
+			echo -e "IP info check failed! Check your Internet connection!: exit code: $?"
+		fi
+	else
+		echo -e "\e[31mERROR:\e[0m The program 'curl' is currently not installed, Unable to continue!"
+		exit 1
+	fi
+}
+
+OPTIONS=":i"
+
+CIP=0
+while getopts "$OPTIONS" OPT; do
+	case $OPT in
+		i) getmyexternalipinfo && CIP=1;;
+		\?) echo -e "\e[31mERROR:\e[0m Invalid option: -$OPTARG";;
+	esac
+done
+
+if [[ $CIP == 0 ]]; then
+	getmyexternalip
+fi
+
+exit 0
